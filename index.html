@@ -142,13 +142,29 @@ nav{
 }
 .hero-title{
   font-family:'Cinzel',serif;
-  font-size:clamp(3.5rem,10vw,8rem);
+  font-size:clamp(3.5rem,9vw,7.5rem);
   font-weight:900;
-  letter-spacing:0.12em;
+  letter-spacing:0.08em;
   line-height:1;
-  text-align:center;
+  color:var(--txt);
+  text-shadow:0 0 90px var(--glow),0 0 150px var(--glow2);
+
   width:100%;
-  margin:0 auto 1.6rem auto;}
+  max-width:1400px;
+
+  margin:0 auto 1.6rem auto;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+
+  opacity:0;
+  animation:riUp 1s ease forwards 0.7s;
+
+  transition:color var(--tt),text-shadow var(--tt);
+}
 .hero-line{
   width:70px;height:1px;
   background:linear-gradient(90deg,transparent,var(--acc),transparent);
