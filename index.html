@@ -1079,6 +1079,147 @@ footer{
 }
   
 }
+
+
+/* =========================================
+   FOUNDER SECTION
+========================================= */
+
+.founder-section{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5rem;
+  align-items:center;
+
+  padding:7rem 4rem;
+
+  max-width:1400px;
+  margin:auto;
+}
+
+.founder-image-wrap{
+  position:relative;
+}
+
+.founder-image{
+  width:100%;
+  height:700px;
+  object-fit:cover;
+
+  border:1px solid var(--bdr);
+
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.45),
+    0 0 40px var(--glow);
+
+  transition:all var(--tt);
+}
+
+.founder-content{
+  position:relative;
+}
+
+.founder-eyebrow{
+  font-size:0.58rem;
+  letter-spacing:0.45em;
+  text-transform:uppercase;
+
+  color:var(--acc);
+
+  margin-bottom:1.4rem;
+}
+
+.founder-name{
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.8rem,5vw,5rem);
+  font-weight:700;
+
+  letter-spacing:0.08em;
+
+  color:var(--txt);
+
+  margin-bottom:0.7rem;
+
+  text-shadow:0 0 40px var(--glow);
+}
+
+.founder-role{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;
+  font-style:italic;
+
+  color:var(--muted);
+
+  margin-bottom:2rem;
+}
+
+.founder-line{
+  width:70px;
+  height:1px;
+
+  background:linear-gradient(
+    90deg,
+    var(--acc),
+    transparent
+  );
+
+  margin-bottom:2rem;
+}
+
+.founder-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.45rem;
+  font-style:italic;
+
+  line-height:1.7;
+
+  color:var(--acc2);
+
+  margin-bottom:2rem;
+}
+
+.founder-desc{
+  font-size:0.82rem;
+  line-height:2.1;
+
+  color:var(--muted);
+
+  max-width:560px;
+}
+
+/* MOBILE */
+
+@media screen and (max-width:900px){
+
+  .founder-section{
+    grid-template-columns:1fr;
+    gap:3rem;
+
+    padding:5rem 1.5rem;
+  }
+
+  .founder-image{
+    height:500px;
+  }
+
+  .founder-content{
+    text-align:center;
+  }
+
+  .founder-line{
+    margin:0 auto 2rem;
+  }
+
+  .founder-quote{
+    font-size:1.15rem;
+  }
+
+  .founder-desc{
+    max-width:100%;
+  }
+
+}
 </style>
 </head>
 <body>
@@ -1215,7 +1356,43 @@ footer{
 
   </div>
 </section>
+  
+<!-- ABOUT FOUNDER SECTION -->
+<section class="founder-section">
 
+  <!-- LEFT IMAGE -->
+  <div class="founder-image-wrap">
+    <img src="YOUR_IMAGE.jpg" alt="Arun Founder" class="founder-image">
+  </div>
+
+  <!-- RIGHT CONTENT -->
+  <div class="founder-content">
+
+    <div class="founder-eyebrow">
+      Meet The Founder
+    </div>
+
+    <h2 class="founder-name">
+      Arun
+    </h2>
+
+    <div class="founder-role">
+      Founder — Adography
+    </div>
+
+    <div class="founder-line"></div>
+
+    <p class="founder-quote">
+      “Every wedding holds emotions that deserve more than documentation — they deserve timeless storytelling.”
+    </p>
+
+    <p class="founder-desc">
+      Adography was founded with a passion for transforming weddings into cinematic memories filled with elegance, emotion, and authenticity. Arun believes every celebration carries a unique story that deserves to be preserved beautifully through refined photography and visual artistry.
+    </p>
+
+  </div>
+
+</section>
 <!-- PLATINUM IMMERSIVE -->
 <section class="imm-sec platinum" id="sec-platinum">
   <div class="imm-bg"></div>
