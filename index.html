@@ -1058,7 +1058,30 @@ footer{
   .btn-p,.btn-s{width:100%;padding:1rem;font-size:0.58rem;letter-spacing:0.16em;text-align:center}
   .hero-ring{width:260px;height:260px}
   .hero-ring2{width:370px;height:370px}
-  .scroll-cue{bottom:1.4rem}
+  .scroll-cue{
+  bottom:1.4rem;
+
+  left:50%;
+  transform:translateX(-50%);
+
+  width:100%;
+
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+}
+
+.scroll-cue span{
+  width:100%;
+  text-align:center;
+}
+
+.scroll-bar{
+  margin:0 auto;
+}
 
   /* SECTION HEADER */
   .sec-head{padding:3.5rem 1.4rem 2rem}
@@ -1111,22 +1134,7 @@ footer{
   -webkit-tap-highlight-color:transparent;
 }
 
-  .discover{
-  display:flex;
-  flex-direction:column;
-
-  align-items:center;
-  justify-content:center;
-
-  text-align:center;
-
-  margin:0 auto;
-}
-
-.discover::after{
-  left:50%;
-  transform:translateX(-50%);
-}
+  
   /* FOUNDER */
   .founder-section{grid-template-columns:1fr;padding:4rem 1.4rem;gap:2.5rem;max-width:100%}
   .founder-image{width:100%;height:420px;object-fit:cover;object-position:center top}
