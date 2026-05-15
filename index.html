@@ -68,6 +68,73 @@ body{
   transition:background var(--tt),color var(--tt);
 }
 
+/* =====================
+   PRELOADER
+===================== */
+#preloader{
+  position:fixed;inset:0;z-index:9999;
+  background:#07080d;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1.5rem;
+  transition:opacity 0.8s ease,visibility 0.8s ease;
+}
+#preloader.hide{opacity:0;visibility:hidden}
+.pre-ring-wrap{position:relative;width:120px;height:120px;display:flex;align-items:center;justify-content:center}
+.pre-ring{
+  position:absolute;border-radius:50%;border:1px solid rgba(201,184,150,0.35);
+  animation:preRingSpin 2s linear infinite;
+}
+.pre-ring:nth-child(1){width:120px;height:120px;border-top-color:rgba(201,184,150,0.8)}
+.pre-ring:nth-child(2){width:88px;height:88px;border-bottom-color:rgba(201,184,150,0.5);animation-direction:reverse;animation-duration:1.5s}
+.pre-ring:nth-child(3){width:56px;height:56px;border-left-color:rgba(201,184,150,0.6);animation-duration:1s}
+@keyframes preRingSpin{to{transform:rotate(360deg)}}
+.pre-logo{
+  font-family:'Cinzel',serif;font-size:clamp(1.6rem,6vw,2.2rem);
+  font-weight:700;letter-spacing:0.4em;color:#c9b896;
+  text-shadow:0 0 40px rgba(201,184,150,0.5);
+  animation:preLogoFade 1.5s ease forwards;
+  position:absolute;
+}
+@keyframes preLogoFade{0%{opacity:0;letter-spacing:0.6em}60%{opacity:1}100%{opacity:1;letter-spacing:0.4em}}
+.pre-tagline{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:0.82rem;color:rgba(201,184,150,0.5);
+  letter-spacing:0.2em;
+  animation:preTagFade 1.5s ease 0.3s forwards;opacity:0;
+  position:relative;z-index:1;margin-top:4rem;
+}
+@keyframes preTagFade{to{opacity:1}}
+.pre-bar{
+  width:140px;height:1px;position:relative;overflow:hidden;
+  background:rgba(201,184,150,0.1);
+}
+.pre-bar::after{
+  content:'';position:absolute;left:-100%;top:0;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,#c9b896,transparent);
+  animation:preBarSlide 1.2s ease 0.3s forwards;
+}
+@keyframes preBarSlide{to{left:100%}}
+
+/* =====================
+   CUSTOM CURSOR (desktop)
+===================== */
+.cursor-dot{
+  position:fixed;width:6px;height:6px;border-radius:50%;
+  background:var(--acc);pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:background 0.3s,transform 0.1s;
+  mix-blend-mode:difference;
+}
+.cursor-ring{
+  position:fixed;width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--acc);pointer-events:none;z-index:9997;
+  transform:translate(-50%,-50%);
+  transition:width 0.3s,height 0.3s,border-color 0.3s,opacity 0.3s;
+  opacity:0.6;
+}
+.cursor-ring.hovered{width:48px;height:48px;opacity:0.9}
+@media(hover:none),(max-width:1024px){.cursor-dot,.cursor-ring{display:none}}
+
 /* PARTICLES */
 #cvs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.45}
 
@@ -141,7 +208,7 @@ nav{
   font-family:'Poppins',sans-serif;font-size:0.6rem;font-weight:400;
   letter-spacing:0.55em;text-transform:uppercase;color:var(--acc);
   margin-bottom:2rem;
-  opacity:0;animation:riUp 1s ease forwards 0.4s;
+  opacity:0;animation:riUp 1s ease forwards 1.8s;
   transition:color var(--tt);
 }
 .hero-title{
@@ -151,14 +218,14 @@ nav{
   color:var(--txt);
   text-shadow:0 0 90px var(--glow),0 0 150px var(--glow2);
   margin:0 auto 1.6rem auto;
-  opacity:0;animation:riUp 1s ease forwards 0.7s;
+  opacity:0;animation:riUp 1s ease forwards 2.1s;
   transition:color var(--tt),text-shadow var(--tt);
 }
 .hero-line{
   width:70px;height:1px;
   background:linear-gradient(90deg,transparent,var(--acc),transparent);
   margin:0 auto 1.6rem;
-  opacity:0;animation:riUp 1s ease forwards 1s;
+  opacity:0;animation:riUp 1s ease forwards 2.4s;
   transition:background var(--tt);
 }
 .hero-tagline{
@@ -167,19 +234,19 @@ nav{
   font-style:italic;font-weight:300;
   color:var(--acc2);letter-spacing:0.08em;
   margin-bottom:1.2rem;
-  opacity:0;animation:riUp 1s ease forwards 1.1s;
+  opacity:0;animation:riUp 1s ease forwards 2.5s;
   transition:color var(--tt);
 }
 .hero-desc{
   font-size:0.82rem;font-weight:300;color:var(--muted);
   max-width:540px;margin:0 auto 3rem;
   line-height:2;letter-spacing:0.04em;
-  opacity:0;animation:riUp 1s ease forwards 1.3s;
+  opacity:0;animation:riUp 1s ease forwards 2.7s;
   transition:color var(--tt);
 }
 .hero-btns{
   display:flex;gap:1.4rem;justify-content:center;flex-wrap:wrap;
-  opacity:0;animation:riUp 1s ease forwards 1.6s;
+  opacity:0;animation:riUp 1s ease forwards 3s;
 }
 .btn-p{
   font-family:'Poppins',sans-serif;font-size:0.68rem;font-weight:500;
@@ -208,7 +275,7 @@ nav{
 .scroll-cue{
   position:absolute;bottom:2.2rem;left:50%;transform:translateX(-50%);
   display:flex;flex-direction:column;align-items:center;gap:0.5rem;
-  opacity:0;animation:riUp 1s ease forwards 2.2s;
+  opacity:0;animation:riUp 1s ease forwards 3.6s;
 }
 .scroll-cue span{font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;color:var(--muted)}
 .scroll-bar{
@@ -479,6 +546,8 @@ nav{
 .ai.vis{opacity:1;transform:none}
 .ai.d1{transition-delay:0.1s}.ai.d2{transition-delay:0.22s}
 .ai.d3{transition-delay:0.34s}.ai.d4{transition-delay:0.46s}
+.ai.d5{transition-delay:0.58s}.ai.d6{transition-delay:0.7s}
+.ai.d7{transition-delay:0.82s}.ai.d8{transition-delay:0.94s}
 
 /* =====================
    FOUNDER SECTION
@@ -503,6 +572,238 @@ nav{
 .founder-line{width:80px;height:1px;background:linear-gradient(90deg,var(--acc),transparent);margin-bottom:2rem}
 .founder-quote{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-style:italic;line-height:1.7;color:var(--acc2);margin-bottom:2rem}
 .founder-desc{font-size:0.85rem;line-height:2.1;color:var(--muted)}
+
+/* =====================
+   PACKAGE COMPARISON TABLE
+===================== */
+.compare-section{
+  padding:6rem 2rem 5rem;
+  position:relative;overflow:hidden;
+}
+.compare-section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(201,184,150,0.04),transparent);
+  pointer-events:none;
+}
+.compare-wrap{
+  max-width:1200px;margin:0 auto;overflow-x:auto;
+  scrollbar-width:thin;scrollbar-color:rgba(201,184,150,0.3) transparent;
+}
+.compare-wrap::-webkit-scrollbar{height:3px}
+.compare-wrap::-webkit-scrollbar-thumb{background:rgba(201,184,150,0.3);border-radius:2px}
+.compare-table{
+  width:100%;min-width:680px;border-collapse:collapse;
+}
+.compare-table th{
+  padding:1.6rem 1.4rem 1.2rem;
+  text-align:center;font-family:'Cinzel',serif;
+  font-size:0.85rem;letter-spacing:0.18em;font-weight:700;
+  border-bottom:1px solid var(--bdr2);
+  white-space:nowrap;
+}
+.compare-table th.col-feat{
+  text-align:left;font-family:'Poppins',sans-serif;
+  font-size:0.6rem;letter-spacing:0.3em;color:var(--muted);
+  font-weight:400;
+}
+.th-plat{color:#a8c8e2;text-shadow:0 0 18px rgba(168,200,226,0.4)}
+.th-gold{color:#d4a843;text-shadow:0 0 18px rgba(212,168,67,0.4)}
+.th-silv{color:#9eb0c8;text-shadow:0 0 18px rgba(158,176,200,0.35)}
+.th-brnz{color:#c8762a;text-shadow:0 0 18px rgba(200,118,42,0.38)}
+
+.compare-table .price-row td{
+  padding:0.6rem 1.4rem 1.4rem;text-align:center;
+  font-family:'Poppins',sans-serif;font-size:0.95rem;font-weight:500;
+  color:var(--txt);border-bottom:1px solid var(--bdr);
+}
+.compare-table .price-row td.col-feat{
+  text-align:left;font-size:0.65rem;font-weight:400;
+  color:var(--muted);letter-spacing:0.1em;
+}
+
+.compare-table tr.feat-row td{
+  padding:0.72rem 1.4rem;font-size:0.7rem;
+  border-bottom:1px solid var(--bdr2);
+  text-align:center;color:var(--muted);
+  transition:background 0.2s;
+}
+.compare-table tr.feat-row:hover td{background:rgba(255,255,255,0.015)}
+.compare-table tr.feat-row td.col-feat{
+  text-align:left;font-size:0.72rem;color:var(--txt);
+  letter-spacing:0.02em;font-weight:300;padding-left:0;
+}
+.compare-table tr.feat-row td.col-feat span{
+  display:flex;align-items:center;gap:0.6rem;
+}
+.feat-icon{font-size:0.7rem;opacity:0.5}
+
+.ct-yes{color:#4caf80;font-size:1rem}
+.ct-no{color:rgba(255,255,255,0.12);font-size:0.85rem}
+.ct-val{color:var(--acc);font-size:0.7rem;letter-spacing:0.05em}
+
+.ct-head-row td{
+  padding:1.6rem 1.4rem 0.6rem;
+  font-size:0.52rem;letter-spacing:0.38em;text-transform:uppercase;
+  color:var(--acc);border-bottom:none;font-family:'Poppins',sans-serif;
+  font-weight:500;
+}
+.ct-head-row td.col-feat{color:var(--muted)}
+
+.compare-table .cta-row td{
+  padding:1.6rem 1.4rem;text-align:center;
+  border-top:1px solid var(--bdr2);border-bottom:none;
+}
+.ct-book-btn{
+  font-family:'Poppins',sans-serif;font-size:0.55rem;font-weight:500;
+  letter-spacing:0.2em;text-transform:uppercase;
+  padding:0.65rem 1.2rem;border:1px solid;
+  background:transparent;cursor:pointer;transition:all 0.35s;
+  white-space:nowrap;
+}
+.ct-book-btn.plat{color:#a8c8e2;border-color:rgba(168,200,226,0.4)}
+.ct-book-btn.plat:hover{background:#a8c8e2;color:#060a12;box-shadow:0 0 20px rgba(168,200,226,0.35)}
+.ct-book-btn.gold{color:#d4a843;border-color:rgba(212,168,67,0.4)}
+.ct-book-btn.gold:hover{background:#d4a843;color:#060400;box-shadow:0 0 20px rgba(212,168,67,0.38)}
+.ct-book-btn.silv{color:#9eb0c8;border-color:rgba(158,176,200,0.4)}
+.ct-book-btn.silv:hover{background:#9eb0c8;color:#06060a;box-shadow:0 0 20px rgba(158,176,200,0.32)}
+.ct-book-btn.brnz{color:#c8762a;border-color:rgba(200,118,42,0.4)}
+.ct-book-btn.brnz:hover{background:#c8762a;color:#060400;box-shadow:0 0 20px rgba(200,118,42,0.35)}
+
+/* =====================
+   ADD-ONS SECTION
+===================== */
+.addons-section{
+  padding:5rem 2rem 6rem;
+  position:relative;overflow:hidden;
+}
+.addons-section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(201,184,150,0.04),transparent);
+}
+.addons-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1.2rem;max-width:1200px;margin:0 auto;
+}
+.addon-card{
+  position:relative;
+  border:1px solid var(--bdr2);
+  background:var(--card);
+  backdrop-filter:blur(16px);
+  padding:1.8rem 1.4rem;
+  transition:all 0.4s;
+  overflow:hidden;
+}
+.addon-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,184,150,0.04),transparent);
+  opacity:0;transition:opacity 0.4s;
+}
+.addon-card:hover{
+  border-color:rgba(201,184,150,0.3);
+  transform:translateY(-4px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.4),0 0 30px rgba(201,184,150,0.08);
+}
+.addon-card:hover::before{opacity:1}
+.addon-icon{
+  font-size:1.8rem;margin-bottom:1rem;
+  filter:grayscale(0.3);
+}
+.addon-name{
+  font-family:'Cinzel',serif;font-size:0.85rem;font-weight:600;
+  letter-spacing:0.1em;color:var(--txt);margin-bottom:0.4rem;
+}
+.addon-desc{
+  font-size:0.68rem;color:var(--muted);line-height:1.65;
+  margin-bottom:1.2rem;
+}
+.addon-price{
+  font-family:'Poppins',sans-serif;font-size:1.05rem;font-weight:500;
+  color:var(--acc);letter-spacing:0.03em;
+}
+.addon-price span{
+  font-size:0.6rem;color:var(--muted);letter-spacing:0.1em;
+  font-weight:300;
+}
+.addon-note{
+  font-size:0.6rem;color:var(--muted);margin-top:0.3rem;
+  font-style:italic;opacity:0.7;
+}
+.addons-cta{
+  text-align:center;margin-top:3rem;
+}
+.addons-cta p{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  color:var(--muted);font-size:1rem;margin-bottom:1.4rem;
+}
+
+/* =====================
+   ENQUIRY FORM SECTION
+===================== */
+.enquiry-section{
+  padding:5rem 2rem 6rem;position:relative;overflow:hidden;
+}
+.enquiry-section::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 60% at 50% 50%,rgba(201,184,150,0.05),transparent);
+}
+.enquiry-inner{
+  max-width:680px;margin:0 auto;position:relative;z-index:2;
+}
+.enquiry-form{
+  display:flex;flex-direction:column;gap:1.2rem;
+  margin-top:2rem;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.form-group{display:flex;flex-direction:column;gap:0.45rem}
+.form-group label{
+  font-size:0.58rem;letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--acc);font-weight:400;
+}
+.form-group input,
+.form-group select{
+  width:100%;padding:0.85rem 1rem;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--bdr2);
+  color:var(--txt);font-family:'Poppins',sans-serif;
+  font-size:0.78rem;font-weight:300;letter-spacing:0.04em;
+  outline:none;transition:border-color 0.3s,box-shadow 0.3s;
+  -webkit-appearance:none;appearance:none;
+}
+.form-group select{
+  cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(201,184,150,0.5)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 1rem center;
+  padding-right:2.5rem;
+}
+.form-group select option{background:#0d0e18;color:var(--txt)}
+.form-group input:focus,.form-group select:focus{
+  border-color:rgba(201,184,150,0.4);
+  box-shadow:0 0 0 1px rgba(201,184,150,0.15),0 0 20px rgba(201,184,150,0.08);
+}
+.form-group input::placeholder{color:rgba(122,106,80,0.5)}
+.form-submit{
+  display:flex;align-items:center;justify-content:center;gap:0.8rem;
+  font-family:'Poppins',sans-serif;font-size:0.68rem;font-weight:500;
+  letter-spacing:0.24em;text-transform:uppercase;
+  padding:1.1rem 2.4rem;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:var(--bg0);border:none;cursor:pointer;
+  transition:all 0.4s;position:relative;overflow:hidden;
+  margin-top:0.5rem;
+}
+.form-submit::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--acc2),var(--acc));
+  opacity:0;transition:opacity 0.4s;
+}
+.form-submit:hover::after{opacity:1}
+.form-submit:hover{box-shadow:0 0 45px var(--glow),0 12px 30px rgba(0,0,0,0.35);transform:translateY(-2px)}
+.form-submit svg,.form-submit span{position:relative;z-index:1}
+.form-note{
+  text-align:center;font-size:0.62rem;color:var(--muted);
+  margin-top:0.8rem;letter-spacing:0.06em;line-height:1.7;
+}
 
 /* =====================
    CONTACT
@@ -544,6 +845,48 @@ nav{
 .wa-btn svg,.wa-btn span{position:relative;z-index:1}
 
 /* =====================
+   STICKY WHATSAPP BUTTON
+===================== */
+.wa-float{
+  position:fixed;bottom:2rem;right:2rem;z-index:500;
+  display:flex;align-items:center;gap:0.65rem;
+  background:linear-gradient(135deg,#25d366,#128c4a);
+  border-radius:50px;
+  padding:0.8rem 1.3rem;
+  box-shadow:0 6px 28px rgba(37,211,102,0.35),0 2px 10px rgba(0,0,0,0.4);
+  text-decoration:none;color:#fff;
+  transition:all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+  overflow:hidden;
+}
+.wa-float::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,#128c4a,#075e32);
+  opacity:0;transition:opacity 0.35s;
+}
+.wa-float:hover{
+  transform:translateY(-3px) scale(1.04);
+  box-shadow:0 10px 40px rgba(37,211,102,0.45),0 4px 16px rgba(0,0,0,0.5);
+}
+.wa-float:hover::before{opacity:1}
+.wa-float svg{position:relative;z-index:1;flex-shrink:0;width:22px;height:22px}
+.wa-float-label{
+  position:relative;z-index:1;
+  font-family:'Poppins',sans-serif;font-size:0.62rem;
+  font-weight:500;letter-spacing:0.16em;text-transform:uppercase;
+  white-space:nowrap;
+}
+.wa-float-pulse{
+  position:absolute;top:-3px;right:-3px;
+  width:12px;height:12px;border-radius:50%;
+  background:#ff5555;border:2px solid var(--bg0);
+  animation:waPulse 2s ease-in-out infinite;
+}
+@keyframes waPulse{
+  0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,85,85,0.4)}
+  50%{transform:scale(1.15);box-shadow:0 0 0 6px rgba(255,85,85,0)}
+}
+
+/* =====================
    FOOTER
 ===================== */
 footer{
@@ -566,161 +909,73 @@ footer{
 
 @keyframes riUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:none}}
 
-/* =====================================================
-   MOBILE — SINGLE CLEAN BLOCK (max-width: 768px)
-   No conflicts, no duplicates
-===================================================== */
+/* =====================================================================
+   MOBILE — max-width: 768px
+===================================================================== */
 @media screen and (max-width:768px){
-
-  /* --- GLOBAL --- */
   html,body{width:100%;overflow-x:hidden}
-  body{padding-bottom:0} /* no bottom nav bar needed */
   section{overflow:hidden}
 
-  /* --- NAVBAR --- */
-  nav{
-    padding:1rem 1.2rem;
-    gap:0.8rem;
-  }
-  .logo{
-    font-size:0.9rem;
-    letter-spacing:0.2em;
-    white-space:nowrap;
-  }
-  /* Hide desktop links entirely — replaced by inline CTA */
+  /* NAVBAR */
+  nav{padding:1rem 1.2rem;gap:0.8rem}
+  .logo{font-size:0.9rem;letter-spacing:0.2em;white-space:nowrap}
   .nav-links{display:none}
-  .nav-btn{
-    font-size:0.5rem;
-    padding:0.6rem 1rem;
-    letter-spacing:0.14em;
-    white-space:nowrap;
-    flex-shrink:0;
-  }
+  .nav-btn{font-size:0.5rem;padding:0.6rem 1rem;letter-spacing:0.14em;white-space:nowrap;flex-shrink:0}
 
-  /* --- HERO --- */
-  .hero{
-    min-height:100svh;
-    padding:6.5rem 1.5rem 5rem;
-    align-items:center;
-  }
+  /* HERO */
+  .hero{min-height:100svh;padding:6.5rem 1.5rem 5rem;align-items:center}
   .hero-content{width:100%;max-width:100%}
-  .hero-eyebrow{
-    font-size:0.52rem;
-    letter-spacing:0.28em;
-    margin-bottom:1.2rem;
-  }
-  .hero-title{
-    font-size:clamp(2.6rem,14vw,4.5rem);
-    line-height:1;
-    letter-spacing:0.04em;
-    margin-bottom:1.2rem;
-  }
+  .hero-eyebrow{font-size:0.52rem;letter-spacing:0.28em;margin-bottom:1.2rem}
+  .hero-title{font-size:clamp(2.6rem,14vw,4.5rem);line-height:1;letter-spacing:0.04em;margin-bottom:1.2rem}
   .hero-line{margin-bottom:1.2rem}
-  .hero-tagline{
-    font-size:1.05rem;
-    line-height:1.6;
-    padding:0 0.5rem;
-  }
-  .hero-desc{
-    font-size:0.75rem;
-    line-height:1.95;
-    max-width:100%;
-    padding:0 0.2rem;
-    margin-bottom:2rem;
-  }
-  .hero-btns{
-    flex-direction:column;
-    gap:0.85rem;
-    width:100%;
-    align-items:stretch;
-  }
-  .btn-p,.btn-s{
-    width:100%;
-    padding:1rem;
-    font-size:0.58rem;
-    letter-spacing:0.16em;
-    text-align:center;
-  }
+  .hero-tagline{font-size:1.05rem;line-height:1.6;padding:0 0.5rem}
+  .hero-desc{font-size:0.75rem;line-height:1.95;max-width:100%;padding:0 0.2rem;margin-bottom:2rem}
+  .hero-btns{flex-direction:column;gap:0.85rem;width:100%;align-items:stretch}
+  .btn-p,.btn-s{width:100%;padding:1rem;font-size:0.58rem;letter-spacing:0.16em;text-align:center}
   .hero-ring{width:260px;height:260px}
   .hero-ring2{width:370px;height:370px}
   .scroll-cue{bottom:1.4rem}
 
-  /* --- SECTION HEADER --- */
+  /* SECTION HEADER */
   .sec-head{padding:3.5rem 1.4rem 2rem}
   .eyebrow{font-size:0.52rem;letter-spacing:0.3em}
   .sec-title{font-size:1.85rem;line-height:1.25}
   .sec-sub{font-size:0.95rem;line-height:1.75;padding:0 0.3rem}
 
-  /* --- PACKAGE CARDS --- */
-  .cards-wrap{
-    padding:0.5rem 0 3.5rem;
-    position:relative;
-  }
+  /* PACKAGE CARDS */
+  .cards-wrap{padding:0.5rem 0 3.5rem;position:relative}
   .cards-grid{
-    display:flex;
-    overflow-x:auto;
-    gap:1rem;
+    display:flex;overflow-x:auto;gap:1rem;
     padding:0.5rem 1.2rem 1rem;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    scroll-behavior:smooth;
-    /* hide scrollbar */
-    scrollbar-width:none;
-    -ms-overflow-style:none;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;
   }
   .cards-grid::-webkit-scrollbar{display:none}
   .pkg-card{
-    min-width:82vw;
-    max-width:320px;
-    flex-shrink:0;
-    scroll-snap-align:center;
-    padding:1.8rem 1.4rem 1.6rem;
-    /* reset desktop hover transform that breaks mobile snapping */
-    transform:none !important;
-    opacity:1 !important; /* ensure visible after scroll-snap */
+    min-width:82vw;max-width:320px;flex-shrink:0;
+    scroll-snap-align:center;padding:1.8rem 1.4rem 1.6rem;
+    transform:none !important;opacity:1 !important;
   }
   .pkg-card.vis{transform:none !important}
-  .card-badge{font-size:0.5rem}
-  .card-name{font-size:1.5rem}
-  .card-price{font-size:1.2rem}
-  .card-feats li{font-size:0.7rem;line-height:1.7}
+  .card-badge{font-size:0.5rem}.card-name{font-size:1.5rem}
+  .card-price{font-size:1.2rem}.card-feats li{font-size:0.7rem;line-height:1.7}
   .card-btn{padding:0.9rem;font-size:0.54rem;letter-spacing:0.14em}
 
-  /* Mobile arrow buttons */
+  /* MOBILE ARROWS */
   .catalog-arrow{
-    display:flex;
-    position:absolute;
-    top:50%;
-    transform:translateY(-60%);
-    width:36px;height:36px;
-    border-radius:50%;
+    display:flex;position:absolute;top:50%;transform:translateY(-60%);
+    width:36px;height:36px;border-radius:50%;
     border:1px solid rgba(255,255,255,0.1);
-    background:rgba(8,8,14,0.8);
-    backdrop-filter:blur(10px);
-    align-items:center;justify-content:center;
-    color:var(--txt);font-size:1.1rem;
-    cursor:pointer;z-index:50;
-    transition:all 0.3s;
-    /* prevent flash */
-    opacity:0.7;
+    background:rgba(8,8,14,0.8);backdrop-filter:blur(10px);
+    align-items:center;justify-content:center;color:var(--txt);
+    font-size:1.1rem;cursor:pointer;z-index:50;opacity:0.7;transition:all 0.3s;
   }
   .catalog-arrow:hover{opacity:1;background:rgba(255,255,255,0.08)}
-  .catalog-prev{left:4px}
-  .catalog-next{right:4px}
+  .catalog-prev{left:4px}.catalog-next{right:4px}
 
-  /* --- FOUNDER SECTION --- */
-  .founder-section{
-    grid-template-columns:1fr;
-    padding:4rem 1.4rem;
-    gap:2.5rem;
-    max-width:100%;
-  }
-  .founder-image{
-    width:100%;
-    height:420px;
-    object-fit:cover;
-    object-position:center top;
-  }
+  /* FOUNDER */
+  .founder-section{grid-template-columns:1fr;padding:4rem 1.4rem;gap:2.5rem;max-width:100%}
+  .founder-image{width:100%;height:420px;object-fit:cover;object-position:center top}
   .founder-content{text-align:center}
   .founder-eyebrow{font-size:0.52rem;letter-spacing:0.3em}
   .founder-name{font-size:2.8rem;line-height:1.05}
@@ -729,138 +984,131 @@ footer{
   .founder-quote{font-size:1.15rem;line-height:1.75}
   .founder-desc{font-size:0.77rem;line-height:1.95}
 
-  /* --- IMMERSIVE PACKAGE SECTIONS --- */
-  .imm-sec{
-    min-height:auto;
-    padding:4.5rem 1.4rem;
-  }
-  .imm-inner{
-    grid-template-columns:1fr;
-    gap:2.5rem;
-    direction:ltr !important; /* override gold/bronze rtl */
-  }
+  /* IMMERSIVE */
+  .imm-sec{min-height:auto;padding:4.5rem 1.4rem}
+  .imm-inner{grid-template-columns:1fr;gap:2.5rem;direction:ltr !important}
   .imm-inner > *{direction:ltr !important}
-  /* image always on top, text below */
-  .imm-left{order:2}
-  .imm-right{order:1}
-
-  .imm-num{
-    font-size:4.5rem;
-    top:-1.5rem;
-    left:-0.2rem;
-  }
+  .imm-left{order:2}.imm-right{order:1}
+  .imm-num{font-size:4.5rem;top:-1.5rem;left:-0.2rem}
   .imm-eye{font-size:0.5rem;letter-spacing:0.26em}
   .imm-title{font-size:2rem;line-height:1.1}
   .imm-price{font-size:1.2rem}
   .imm-tag{font-size:0.92rem;line-height:1.6;margin-bottom:1.6rem}
   .imm-rule{margin-bottom:1.6rem}
-  .imm-feats{
-    grid-template-columns:1fr;
-    gap:0.6rem;
-  }
+  .imm-feats{grid-template-columns:1fr;gap:0.6rem}
   .imm-feats li{font-size:0.7rem;line-height:1.7}
-  .imm-book{
-    width:100%;
-    text-align:center;
-    padding:0.95rem;
-    font-size:0.54rem;
-    letter-spacing:0.16em;
-    margin-top:2rem;
-    display:block;
-  }
+  .imm-book{width:100%;text-align:center;padding:0.95rem;font-size:0.54rem;letter-spacing:0.16em;margin-top:2rem;display:block}
+  .viz-frame{aspect-ratio:4/3}
+  .viz-inner{width:calc(100% - 12px);height:calc(100% - 12px)}
+  .viz-label{font-size:0.75rem;letter-spacing:0.2em}.viz-sub{font-size:0.7rem}
 
-  /* Visual frame on mobile */
-  .viz-frame{
-    aspect-ratio:4/3; /* wider, shorter on mobile */
-  }
-  .viz-inner{
-    width:calc(100% - 12px);
-    height:calc(100% - 12px);
-  }
-  .viz-label{font-size:0.75rem;letter-spacing:0.2em}
-  .viz-sub{font-size:0.7rem}
+  /* COMPARISON TABLE */
+  .compare-section{padding:4rem 1rem 4rem}
+  .compare-table th{padding:1.2rem 0.9rem 0.9rem;font-size:0.7rem}
+  .compare-table tr.feat-row td{padding:0.65rem 0.9rem;font-size:0.65rem}
+  .compare-table tr.feat-row td.col-feat{font-size:0.65rem}
+  .compare-table .price-row td{padding:0.5rem 0.9rem 1rem;font-size:0.82rem}
+  .ct-book-btn{padding:0.6rem 0.9rem;font-size:0.5rem}
+  .ct-head-row td{padding:1.2rem 0.9rem 0.5rem;font-size:0.48rem}
+  .compare-table .cta-row td{padding:1.2rem 0.9rem}
 
-  /* --- CONTACT --- */
-  .contact{
-    min-height:auto;
-    padding:4.5rem 1.4rem;
-  }
+  /* ADD-ONS */
+  .addons-section{padding:4rem 1.2rem 4rem}
+  .addons-grid{grid-template-columns:1fr 1fr;gap:0.9rem}
+  .addon-card{padding:1.4rem 1rem}
+  .addon-icon{font-size:1.4rem;margin-bottom:0.7rem}
+  .addon-name{font-size:0.78rem}
+  .addon-desc{font-size:0.62rem;margin-bottom:0.9rem}
+  .addon-price{font-size:0.92rem}
+  .addons-cta p{font-size:0.9rem}
+
+  /* ENQUIRY FORM */
+  .enquiry-section{padding:4rem 1.2rem 4rem}
+  .form-row{grid-template-columns:1fr}
+  .form-group input,.form-group select{font-size:0.72rem;padding:0.8rem 0.9rem}
+  .form-group label{font-size:0.54rem}
+  .form-submit{font-size:0.6rem;padding:1rem 1.6rem}
+
+  /* CONTACT */
+  .contact{min-height:auto;padding:4.5rem 1.4rem}
   .contact-inner{width:100%}
   .c-eye{font-size:0.52rem;letter-spacing:0.26em}
   .c-title{font-size:1.9rem;line-height:1.25}
   .c-sub{font-size:0.95rem;line-height:1.7;margin-bottom:2rem}
-  .c-info{
-    flex-direction:column;
-    align-items:center;
-    gap:1.4rem;
-    margin-bottom:2rem;
-  }
-  .c-item-lbl{font-size:0.52rem}
-  .c-item-val{font-size:0.8rem}
-  .wa-btn{
-    width:100%;
-    justify-content:center;
-    padding:1rem;
-    font-size:0.58rem;
-    letter-spacing:0.14em;
-  }
+  .c-info{flex-direction:column;align-items:center;gap:1.4rem;margin-bottom:2rem}
+  .c-item-lbl{font-size:0.52rem}.c-item-val{font-size:0.8rem}
+  .wa-btn{width:100%;justify-content:center;padding:1rem;font-size:0.58rem;letter-spacing:0.14em}
 
-  /* --- FOOTER --- */
-  footer{
-    grid-template-columns:1fr;
-    text-align:center;
-    padding:2.5rem 1.4rem;
-    gap:1.6rem;
-  }
-  .ft-logo{font-size:0.95rem;letter-spacing:0.2em}
-  .ft-tag{font-size:0.8rem}
-  .ft-quote{font-size:0.85rem;line-height:1.85}
-  .ft-right{text-align:center;font-size:0.72rem;line-height:2}
-  .ft-btm{
-    flex-direction:column;
-    gap:0.6rem;
-    padding:1rem 1.4rem;
-  }
+  /* FOOTER */
+  footer{grid-template-columns:1fr;text-align:center;padding:2.5rem 1.4rem;gap:1.6rem}
+  .ft-logo{font-size:0.95rem;letter-spacing:0.2em}.ft-tag{font-size:0.8rem}
+  .ft-quote{font-size:0.85rem;line-height:1.85}.ft-right{text-align:center;font-size:0.72rem;line-height:2}
+  .ft-btm{flex-direction:column;gap:0.6rem;padding:1rem 1.4rem}
   .ft-copy{font-size:0.58rem;text-align:center;line-height:1.8}
+
+  /* STICKY WA BUTTON — compact on mobile */
+  .wa-float{padding:0.75rem;border-radius:50%;right:1.2rem;bottom:1.8rem}
+  .wa-float-label{display:none}
 }
 
-/* Extra small: phones under 400px */
+/* Extra small phones */
 @media screen and (max-width:400px){
   .hero-title{font-size:2.4rem}
-  .hero-ring{width:220px;height:220px}
-  .hero-ring2{width:310px;height:310px}
+  .hero-ring{width:220px;height:220px}.hero-ring2{width:310px;height:310px}
   .pkg-card{min-width:88vw}
   .founder-image{height:360px}
-  .imm-title{font-size:1.8rem}
-  .c-title{font-size:1.7rem}
+  .imm-title{font-size:1.8rem}.c-title{font-size:1.7rem}
+  .addons-grid{grid-template-columns:1fr}
 }
 
-/* Tablet: 769px – 1100px */
+/* Tablet: 769px–1100px */
 @media screen and (min-width:769px) and (max-width:1100px){
-  nav{padding:1.2rem 2rem}
-  .nav-links{display:none}
+  nav{padding:1.2rem 2rem}.nav-links{display:none}
   .cards-wrap{padding:1rem 1.5rem 4rem}
-  .cards-grid{
-    grid-template-columns:repeat(2,1fr);
-    overflow:visible;
-  }
+  .cards-grid{grid-template-columns:repeat(2,1fr);overflow:visible}
   .pkg-card{min-width:unset}
   .imm-sec{padding:5rem 2.5rem}
   .imm-inner{grid-template-columns:1fr;gap:3rem}
   .imm-sec.gold .imm-inner,.imm-sec.bronze .imm-inner{direction:ltr}
   .imm-feats{grid-template-columns:1fr 1fr}
   .founder-section{grid-template-columns:1fr;padding:5rem 2.5rem;gap:3rem}
-  .founder-image{height:500px}
-  .founder-content{text-align:center}
+  .founder-image{height:500px}.founder-content{text-align:center}
   .founder-line{margin:0 auto 2rem}
   footer{grid-template-columns:1fr 1fr;padding:2.8rem 2.5rem}
-  .ft-right{text-align:right}
-  .ft-btm{padding:1.2rem 2.5rem}
-  .catalog-arrow{display:none} /* arrows not needed on tablet 2-col grid */
+  .ft-right{text-align:right}.ft-btm{padding:1.2rem 2.5rem}
+  .catalog-arrow{display:none}
+  .addons-grid{grid-template-columns:repeat(2,1fr)}
+  .compare-section{padding:5rem 1.5rem 4rem}
+  .enquiry-section{padding:4rem 2.5rem 5rem}
 }
 </style>
 </head>
 <body>
+
+<!-- ===================== PRELOADER ===================== -->
+<div id="preloader">
+  <div class="pre-ring-wrap">
+    <div class="pre-ring"></div>
+    <div class="pre-ring"></div>
+    <div class="pre-ring"></div>
+    <div class="pre-logo">A</div>
+  </div>
+  <div class="pre-tagline">ADOGRAPHY</div>
+  <div class="pre-bar"></div>
+</div>
+
+<!-- ===================== CUSTOM CURSOR ===================== -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ===================== STICKY WHATSAPP ===================== -->
+<a class="wa-float" href="https://wa.me/918667656850?text=Hello%20Adography%2C%20I%20would%20like%20to%20enquire%20about%20your%20wedding%20photography%20packages." target="_blank" aria-label="Chat on WhatsApp">
+  <div class="wa-float-pulse"></div>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  <span class="wa-float-label">Chat with Us</span>
+</a>
 
 <canvas id="cvs"></canvas>
 
@@ -872,9 +1120,10 @@ footer{
     <li><a href="#sec-gold">Gold</a></li>
     <li><a href="#sec-silver">Silver</a></li>
     <li><a href="#sec-bronze">Bronze</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#compare">Compare</a></li>
+    <li><a href="#enquiry">Enquire</a></li>
   </ul>
-  <button class="nav-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book Now</button>
+  <button class="nav-btn" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">Book Now</button>
 </nav>
 
 <!-- HERO -->
@@ -890,7 +1139,7 @@ footer{
     <p class="hero-desc">Luxury wedding storytelling crafted with elegance, emotion, and timeless artistry. We transform celebrations into beautifully framed cinematic memories through refined photography and premium visual experiences.</p>
     <div class="hero-btns">
       <button class="btn-p" onclick="document.getElementById('collections').scrollIntoView({behavior:'smooth'})"><span>Explore Collections</span></button>
-      <button class="btn-s" onclick="window.open('https://wa.me/918667656850?text=Hello+Adography%2C+I+would+like+to+enquire+about+your+wedding+photography+packages.','_blank')">Book Now</button>
+      <button class="btn-s" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">Book Now</button>
     </div>
   </div>
   <div class="scroll-cue">
@@ -1182,6 +1431,295 @@ footer{
   </div>
 </section>
 
+<!-- ===================== PACKAGE COMPARISON TABLE ===================== -->
+<section class="compare-section" id="compare">
+  <div class="sec-head ai" style="padding-top:0;opacity:0;transform:translateY(38px)">
+    <div class="eyebrow">At a Glance</div>
+    <h2 class="sec-title">Compare Packages</h2>
+    <p class="sec-sub">Every detail side by side — find the collection that tells your story</p>
+  </div>
+  <div class="compare-wrap ai d2">
+    <table class="compare-table" role="table">
+      <thead>
+        <tr>
+          <th class="col-feat">Feature</th>
+          <th class="th-plat">Platinum<br><span style="font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:300;letter-spacing:0.05em">₹1,49,000</span></th>
+          <th class="th-gold">Gold<br><span style="font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:300;letter-spacing:0.05em">₹1,15,000</span></th>
+          <th class="th-silv">Silver<br><span style="font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:300;letter-spacing:0.05em">₹74,999</span></th>
+          <th class="th-brnz">Bronze<br><span style="font-family:'Poppins',sans-serif;font-size:0.72rem;font-weight:300;letter-spacing:0.05em">₹44,999</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- PHOTOGRAPHY -->
+        <tr class="ct-head-row">
+          <td class="col-feat">— Photography —</td>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+        <tr class="feat-row ai d1">
+          <td class="col-feat"><span><span class="feat-icon">📷</span>Traditional Photography</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+        </tr>
+        <tr class="feat-row ai d2">
+          <td class="col-feat"><span><span class="feat-icon">🎞</span>Candid Photography</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+        <tr class="feat-row ai d3">
+          <td class="col-feat"><span><span class="feat-icon">🖼</span>Photos for Album</span></td>
+          <td><span class="ct-val">300 / album</span></td>
+          <td><span class="ct-val">300 / album</span></td>
+          <td><span class="ct-val">300 / album</span></td>
+          <td><span class="ct-val">350 total</span></td>
+        </tr>
+
+        <!-- VIDEO -->
+        <tr class="ct-head-row">
+          <td class="col-feat">— Videography —</td>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+        <tr class="feat-row ai d1">
+          <td class="col-feat"><span><span class="feat-icon">🎥</span>Traditional Video</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+        </tr>
+        <tr class="feat-row ai d2">
+          <td class="col-feat"><span><span class="feat-icon">🎬</span>Candid Video</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+        <tr class="feat-row ai d3">
+          <td class="col-feat"><span><span class="feat-icon">✂️</span>Wedding Teaser (4–5 min)</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+        <tr class="feat-row ai d4">
+          <td class="col-feat"><span><span class="feat-icon">🚁</span>Drone Aerial Coverage</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+
+        <!-- ALBUMS & PRINTS -->
+        <tr class="ct-head-row">
+          <td class="col-feat">— Albums & Prints —</td>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+        <tr class="feat-row ai d1">
+          <td class="col-feat"><span><span class="feat-icon">📗</span>Luxury Albums</span></td>
+          <td><span class="ct-val">2 × 50-sheet</span></td>
+          <td><span class="ct-val">2 × 40-sheet</span></td>
+          <td><span class="ct-val">2 × 300-sheet</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+        <tr class="feat-row ai d2">
+          <td class="col-feat"><span><span class="feat-icon">🖼</span>Photo Frames (12×18)</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-val">2 frames</span></td>
+          <td><span class="ct-val">2 frames</span></td>
+          <td><span class="ct-val">1 frame</span></td>
+        </tr>
+        <tr class="feat-row ai d3">
+          <td class="col-feat"><span><span class="feat-icon">📅</span>Calendar Print</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-yes">✦</span></td>
+        </tr>
+        <tr class="feat-row ai d4">
+          <td class="col-feat"><span><span class="feat-icon">🎁</span>Free Candid Album</span></td>
+          <td><span class="ct-val">20 sheets</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+
+        <!-- SPECIAL SESSIONS -->
+        <tr class="ct-head-row">
+          <td class="col-feat">— Special Sessions —</td>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+        <tr class="feat-row ai d1">
+          <td class="col-feat"><span><span class="feat-icon">🌅</span>Pre/Post Wedding Shoot</span></td>
+          <td><span class="ct-val">Full day</span></td>
+          <td><span class="ct-val">Full day</span></td>
+          <td><span class="ct-val">Half day</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+        <tr class="feat-row ai d2">
+          <td class="col-feat"><span><span class="feat-icon">🎞</span>Cinematic Outdoor Shoot</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+        <tr class="feat-row ai d3">
+          <td class="col-feat"><span><span class="feat-icon">🎬</span>Invitation Video Shoot</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+
+        <!-- DELIVERABLES -->
+        <tr class="ct-head-row">
+          <td class="col-feat">— Deliverables —</td>
+          <td></td><td></td><td></td><td></td>
+        </tr>
+        <tr class="feat-row ai d1">
+          <td class="col-feat"><span><span class="feat-icon">💾</span>HD Pen Drive</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-yes">✦</span></td>
+        </tr>
+        <tr class="feat-row ai d2">
+          <td class="col-feat"><span><span class="feat-icon">💌</span>WhatsApp Invitation</span></td>
+          <td><span class="ct-yes">✦</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+          <td><span class="ct-no">—</span></td>
+        </tr>
+
+        <!-- CTA ROW -->
+        <tr class="cta-row">
+          <td class="col-feat"></td>
+          <td><button class="ct-book-btn plat" onclick="window.open('https://wa.me/918667656850?text=Interested+in+Platinum+package','_blank')">Book Platinum</button></td>
+          <td><button class="ct-book-btn gold" onclick="window.open('https://wa.me/918667656850?text=Interested+in+Gold+package','_blank')">Book Gold</button></td>
+          <td><button class="ct-book-btn silv" onclick="window.open('https://wa.me/918667656850?text=Interested+in+Silver+package','_blank')">Book Silver</button></td>
+          <td><button class="ct-book-btn brnz" onclick="window.open('https://wa.me/918667656850?text=Interested+in+Bronze+package','_blank')">Book Bronze</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== ADD-ONS SECTION ===================== -->
+<section class="addons-section" id="addons">
+  <div class="sec-head ai" style="padding-top:0">
+    <div class="eyebrow">Personalise Your Story</div>
+    <h2 class="sec-title">Package Add-Ons</h2>
+    <p class="sec-sub">Enhance any package with bespoke additions tailored to your celebration</p>
+  </div>
+  <div class="addons-grid">
+    <div class="addon-card ai d1">
+      <div class="addon-icon">🚁</div>
+      <div class="addon-name">Drone Coverage</div>
+      <div class="addon-desc">Breathtaking aerial shots that frame your venue and procession from cinematic heights.</div>
+      <div class="addon-price">₹8,000 <span>/ event</span></div>
+    </div>
+    <div class="addon-card ai d2">
+      <div class="addon-icon">⏱</div>
+      <div class="addon-name">Extra Coverage Hour</div>
+      <div class="addon-desc">Extend your session to capture every last toast, dance, and heartfelt moment.</div>
+      <div class="addon-price">₹3,500 <span>/ hour</span></div>
+    </div>
+    <div class="addon-card ai d3">
+      <div class="addon-icon">📸</div>
+      <div class="addon-name">Second Shooter</div>
+      <div class="addon-desc">An additional photographer for dual-angle coverage — ensuring nothing goes uncaptured.</div>
+      <div class="addon-price">₹6,000 <span>/ day</span></div>
+    </div>
+    <div class="addon-card ai d4">
+      <div class="addon-icon">🎬</div>
+      <div class="addon-name">Same-Day Edit Reel</div>
+      <div class="addon-desc">A beautifully cut highlight reel delivered on the same evening — ready for your reception screen.</div>
+      <div class="addon-price">₹5,000 <span>/ reel</span></div>
+    </div>
+    <div class="addon-card ai d1">
+      <div class="addon-icon">🎞</div>
+      <div class="addon-name">Additional Teaser</div>
+      <div class="addon-desc">A cinematic 2–3 minute film for social sharing, capturing the essence of your day.</div>
+      <div class="addon-price">₹4,500 <span>/ teaser</span></div>
+    </div>
+    <div class="addon-card ai d2">
+      <div class="addon-icon">📗</div>
+      <div class="addon-name">Extra Album (30 sheets)</div>
+      <div class="addon-desc">Premium 30-sheet luxury album — perfect as a keepsake gift for parents or loved ones.</div>
+      <div class="addon-price">₹4,000 <span>/ album</span></div>
+    </div>
+    <div class="addon-card ai d3">
+      <div class="addon-icon">💌</div>
+      <div class="addon-name">WhatsApp Invite Video</div>
+      <div class="addon-desc">A stunning digital invitation video for WhatsApp sharing — sets the tone before the celebration.</div>
+      <div class="addon-price">₹2,000 <span>/ video</span></div>
+    </div>
+    <div class="addon-card ai d4">
+      <div class="addon-icon">🖼</div>
+      <div class="addon-name">Large Frame (24×36)</div>
+      <div class="addon-desc">Museum-quality large-format print mounted on premium frame — your favourite moment, magnified.</div>
+      <div class="addon-price">₹3,000 <span>/ frame</span></div>
+    </div>
+  </div>
+  <div class="addons-cta ai">
+    <p>Mix and match add-ons with any package · Customise your perfect collection</p>
+    <button class="btn-s" onclick="document.getElementById('enquiry').scrollIntoView({behavior:'smooth'})">Build Your Package</button>
+  </div>
+</section>
+
+<!-- ===================== ENQUIRY FORM ===================== -->
+<section class="enquiry-section" id="enquiry">
+  <div class="enquiry-inner">
+    <div class="sec-head ai" style="padding:0 0 0.5rem;text-align:left">
+      <div class="eyebrow">Begin Your Journey</div>
+      <h2 class="sec-title" style="text-align:left">Make an Enquiry</h2>
+      <p class="sec-sub" style="text-align:left">Tell us about your day — we'll craft a story worth reliving forever</p>
+    </div>
+    <div class="enquiry-form ai d2">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-name">Your Name</label>
+          <input type="text" id="f-name" placeholder="Full name" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label for="f-phone">Phone / WhatsApp</label>
+          <input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-date">Wedding Date</label>
+          <input type="date" id="f-date" style="color-scheme:dark">
+        </div>
+        <div class="form-group">
+          <label for="f-city">Venue City</label>
+          <input type="text" id="f-city" placeholder="City / Town" autocomplete="address-level2">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="f-pkg">Preferred Package</label>
+        <select id="f-pkg">
+          <option value="" disabled selected>Select a package</option>
+          <option value="Platinum (₹1,49,000)">Platinum — ₹1,49,000 · Signature</option>
+          <option value="Gold (₹1,15,000)">Gold — ₹1,15,000 · Premium</option>
+          <option value="Silver (₹74,999)">Silver — ₹74,999 · Refined</option>
+          <option value="Bronze (₹44,999)">Bronze — ₹44,999 · Essential</option>
+          <option value="Custom / Add-Ons">Custom / Add-Ons Only</option>
+          <option value="Not sure yet">Not sure yet — let's discuss</option>
+        </select>
+      </div>
+      <button class="form-submit" id="sendEnquiry" onclick="submitEnquiry()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        <span>Send Enquiry on WhatsApp</span>
+      </button>
+      <p class="form-note">Your details are sent directly to our WhatsApp — we typically respond within a few hours.</p>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section class="contact" id="contact">
   <div class="contact-bg"></div>
@@ -1235,161 +1773,210 @@ footer{
 (function(){
 'use strict';
 
+/* ---- PRELOADER ---- */
+window.addEventListener('DOMContentLoaded',function(){
+  var pre=document.getElementById('preloader');
+  setTimeout(function(){
+    pre.classList.add('hide');
+    setTimeout(function(){pre.style.display='none'},800);
+  },1800);
+});
+
+/* ---- CUSTOM CURSOR (desktop only) ---- */
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  var dot=document.getElementById('cursorDot');
+  var ring=document.getElementById('cursorRing');
+  var mx=window.innerWidth/2,my=window.innerHeight/2;
+  var rx=mx,ry=my;
+
+  document.addEventListener('mousemove',function(e){
+    mx=e.clientX;my=e.clientY;
+    dot.style.left=mx+'px';dot.style.top=my+'px';
+  },{passive:true});
+
+  function animCursor(){
+    rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;
+    ring.style.left=rx+'px';ring.style.top=ry+'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+
+  document.querySelectorAll('a,button,.pkg-card,.addon-card').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ring.classList.add('hovered')});
+    el.addEventListener('mouseleave',function(){ring.classList.remove('hovered')});
+  });
+}
+
 /* ---- PARTICLES ---- */
-const cvs=document.getElementById('cvs');
-const ctx=cvs.getContext('2d');
-let W,H,particles=[];
-let pColor='rgba(201,184,150,';
+var cvs=document.getElementById('cvs');
+var ctx=cvs.getContext('2d');
+var W,H,particles=[];
+var pColor='rgba(201,184,150,';
 
 function resize(){W=cvs.width=window.innerWidth;H=cvs.height=window.innerHeight}
-window.addEventListener('resize',()=>{resize();initP()},{passive:true});
+window.addEventListener('resize',function(){resize();initP()},{passive:true});
 resize();
 
-class P{
-  constructor(){this.reset(true)}
-  reset(rand){
-    this.x=Math.random()*W;
-    this.y=rand?Math.random()*H:H+5;
-    this.s=Math.random()*1.4+0.2;
-    this.vx=(Math.random()-0.5)*0.25;
-    this.vy=-(Math.random()*0.4+0.1);
-    this.op=Math.random()*0.35+0.08;
-    this.life=rand?Math.random()*400:0;
-    this.maxL=Math.random()*320+180;
-  }
-  update(){
-    this.x+=this.vx;this.y+=this.vy;this.life++;
-    if(this.life>this.maxL||this.y<-5)this.reset(false);
-  }
-  draw(){
-    const p=this.life/this.maxL;
-    const a=p<0.12?p*8.3*this.op:p>0.78?(1-p)*4.76*this.op:this.op;
-    if(a<=0)return;
-    ctx.save();
-    ctx.globalAlpha=Math.max(0,Math.min(1,a));
-    ctx.fillStyle=pColor+'1)';
-    ctx.shadowBlur=5;ctx.shadowColor=pColor+'0.6)';
-    ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill();
-    ctx.restore();
-  }
-}
+function P(){this.reset(true)}
+P.prototype.reset=function(rand){
+  this.x=Math.random()*W;
+  this.y=rand?Math.random()*H:H+5;
+  this.s=Math.random()*1.4+0.2;
+  this.vx=(Math.random()-0.5)*0.25;
+  this.vy=-(Math.random()*0.4+0.1);
+  this.op=Math.random()*0.35+0.08;
+  this.life=rand?Math.random()*400:0;
+  this.maxL=Math.random()*320+180;
+};
+P.prototype.update=function(){
+  this.x+=this.vx;this.y+=this.vy;this.life++;
+  if(this.life>this.maxL||this.y<-5)this.reset(false);
+};
+P.prototype.draw=function(){
+  var p=this.life/this.maxL;
+  var a=p<0.12?p*8.3*this.op:p>0.78?(1-p)*4.76*this.op:this.op;
+  if(a<=0)return;
+  ctx.save();
+  ctx.globalAlpha=Math.max(0,Math.min(1,a));
+  ctx.fillStyle=pColor+'1)';
+  ctx.shadowBlur=5;ctx.shadowColor=pColor+'0.6)';
+  ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fill();
+  ctx.restore();
+};
 
 function initP(){
   particles=[];
-  // Reduce particle count on mobile for performance
-  const count=window.innerWidth<768?50:90;
-  for(let i=0;i<count;i++){const p=new P();p.life=Math.random()*p.maxL;particles.push(p)}
+  var count=window.innerWidth<768?50:90;
+  for(var i=0;i<count;i++){var p=new P();p.life=Math.random()*p.maxL;particles.push(p)}
 }
 initP();
 
 function animP(){
   ctx.clearRect(0,0,W,H);
-  particles.forEach(p=>{p.update();p.draw()});
+  particles.forEach(function(p){p.update();p.draw()});
   requestAnimationFrame(animP);
 }
 animP();
 
 /* ---- THEME ENGINE ---- */
-const body=document.body;
-const THEMES={
+var body=document.body;
+var THEMES={
   default:{cls:'',acc:'rgba(201,184,150,'},
   platinum:{cls:'T-platinum',acc:'rgba(168,200,226,'},
   gold:{cls:'T-gold',acc:'rgba(212,168,67,'},
   silver:{cls:'T-silver',acc:'rgba(158,176,200,'},
   bronze:{cls:'T-bronze',acc:'rgba(200,118,42,'},
 };
-let cur='default';
+var cur='default';
 
 function activateTheme(t){
   if(cur===t)return;
-  const prev=THEMES[cur];const next=THEMES[t];
+  var prev=THEMES[cur];var next=THEMES[t];
   if(prev&&prev.cls)body.classList.remove(prev.cls);
   if(next&&next.cls)body.classList.add(next.cls);
   cur=t;
-  setTimeout(()=>{pColor=THEMES[t]?.acc||'rgba(201,184,150,'}, 500);
-  document.querySelectorAll('.pkg-card').forEach(c=>c.classList.remove('active'));
-  const ac=document.querySelector('.pkg-card.'+t);
+  setTimeout(function(){pColor=THEMES[t]?THEMES[t].acc:'rgba(201,184,150,'},500);
+  document.querySelectorAll('.pkg-card').forEach(function(c){c.classList.remove('active')});
+  var ac=document.querySelector('.pkg-card.'+t);
   if(ac)ac.classList.add('active');
 }
 window.activateTheme=activateTheme;
 
-// Card hover (desktop only)
 if(window.matchMedia('(hover:hover)').matches){
-  document.querySelectorAll('.pkg-card').forEach(card=>{
-    const t=card.dataset.theme;
-    card.addEventListener('mouseenter',()=>activateTheme(t));
+  document.querySelectorAll('.pkg-card').forEach(function(card){
+    var t=card.dataset.theme;
+    card.addEventListener('mouseenter',function(){activateTheme(t)});
   });
 }
 
 /* ---- INTERSECTION OBSERVERS ---- */
-const io=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
+var io=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
     if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}
   });
-},{threshold:0.1});
-document.querySelectorAll('.ai,.sec-head').forEach(el=>io.observe(el));
+},{threshold:0.08});
+document.querySelectorAll('.ai,.sec-head').forEach(function(el){io.observe(el)});
 
-// Section-driven theme
-const sio=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
+var sio=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
     if(!e.isIntersecting)return;
-    const cl=['platinum','gold','silver','bronze'];
-    const t=cl.find(c=>e.target.classList.contains(c));
+    var cl=['platinum','gold','silver','bronze'];
+    var t=cl.find(function(c){return e.target.classList.contains(c)});
     if(t)activateTheme(t);
   });
 },{threshold:0.35});
-document.querySelectorAll('.imm-sec').forEach(s=>sio.observe(s));
+document.querySelectorAll('.imm-sec').forEach(function(s){sio.observe(s)});
 
-// Revert to default at hero
-const heroObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)activateTheme('default')});
+var heroObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting)activateTheme('default')});
 },{threshold:0.3});
-const heroEl=document.getElementById('home');
+var heroEl=document.getElementById('home');
 if(heroEl)heroObs.observe(heroEl);
 
 /* ---- NAV SCROLL ---- */
-const nav=document.getElementById('mainnav');
-window.addEventListener('scroll',()=>{
+var nav=document.getElementById('mainnav');
+window.addEventListener('scroll',function(){
   nav.style.background=window.scrollY>60?'rgba(4,5,9,0.96)':'rgba(6,7,12,0.72)';
 },{passive:true});
 
-/* ---- CARD STAGGER (desktop only) ---- */
+/* ---- CARD STAGGER (desktop) ---- */
 if(window.innerWidth>768){
-  document.querySelectorAll('.pkg-card').forEach((c,i)=>{
+  document.querySelectorAll('.pkg-card').forEach(function(c,i){
     c.style.transitionDelay=(i*0.1)+'s';
   });
-  setTimeout(()=>{
-    const cio=new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
+  setTimeout(function(){
+    var cio=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
         if(e.isIntersecting){e.target.classList.add('vis');cio.unobserve(e.target)}
       });
     },{threshold:0.08});
-    document.querySelectorAll('.pkg-card').forEach(c=>cio.observe(c));
+    document.querySelectorAll('.pkg-card').forEach(function(c){cio.observe(c)});
   },100);
 }
 
 /* ---- MOBILE CARD ARROWS ---- */
-const cardsGrid=document.querySelector('.cards-grid');
-const prevBtn=document.querySelector('.catalog-prev');
-const nextBtn=document.querySelector('.catalog-next');
+var cardsGrid=document.querySelector('.cards-grid');
+var prevBtn=document.querySelector('.catalog-prev');
+var nextBtn=document.querySelector('.catalog-next');
 
 if(prevBtn&&nextBtn&&cardsGrid){
-  // Only show arrows on mobile
   function updateArrowVisibility(){
-    const isMobile=window.innerWidth<=768;
+    var isMobile=window.innerWidth<=768;
     prevBtn.style.display=isMobile?'flex':'none';
     nextBtn.style.display=isMobile?'flex':'none';
   }
   updateArrowVisibility();
   window.addEventListener('resize',updateArrowVisibility,{passive:true});
-
-  prevBtn.addEventListener('click',()=>{
-    cardsGrid.scrollBy({left:-window.innerWidth*0.85,behavior:'smooth'});
-  });
-  nextBtn.addEventListener('click',()=>{
-    cardsGrid.scrollBy({left:window.innerWidth*0.85,behavior:'smooth'});
-  });
+  prevBtn.addEventListener('click',function(){cardsGrid.scrollBy({left:-window.innerWidth*0.85,behavior:'smooth'})});
+  nextBtn.addEventListener('click',function(){cardsGrid.scrollBy({left:window.innerWidth*0.85,behavior:'smooth'})});
 }
+
+/* ---- ENQUIRY FORM → WHATSAPP ---- */
+window.submitEnquiry=function(){
+  var name=document.getElementById('f-name').value.trim();
+  var phone=document.getElementById('f-phone').value.trim();
+  var date=document.getElementById('f-date').value;
+  var city=document.getElementById('f-city').value.trim();
+  var pkg=document.getElementById('f-pkg').value;
+
+  if(!name){alert('Please enter your name.');return}
+  if(!phone){alert('Please enter your phone number.');return}
+  if(!pkg){alert('Please select a preferred package.');return}
+
+  var dateStr=date?new Date(date).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'}):'Not specified';
+  var cityStr=city||'Not specified';
+
+  var msg=
+    'Hello Adography! I would like to make an enquiry.\n\n'+
+    '👤 Name: '+name+'\n'+
+    '📞 Phone: '+phone+'\n'+
+    '💍 Wedding Date: '+dateStr+'\n'+
+    '📍 Venue City: '+cityStr+'\n'+
+    '📦 Preferred Package: '+pkg+'\n\n'+
+    'Looking forward to hearing from you!';
+
+  window.open('https://wa.me/918667656850?text='+encodeURIComponent(msg),'_blank');
+};
 
 })();
 </script>
