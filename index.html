@@ -90,12 +90,13 @@ body{
 @keyframes preRingSpin{to{transform:rotate(360deg)}}
 .pre-logo{
   font-family:'Cinzel',serif;font-size:clamp(1.6rem,6vw,2.2rem);
-  font-weight:700;letter-spacing:0.4em;color:#c9b896;
+  font-weight:700;letter-spacing:0;color:#c9b896;
   text-shadow:0 0 40px rgba(201,184,150,0.5);
   animation:preLogoFade 1.5s ease forwards;
   position:absolute;
+  left:50%;top:50%;transform:translate(-50%,-50%);
 }
-@keyframes preLogoFade{0%{opacity:0;letter-spacing:0.6em}60%{opacity:1}100%{opacity:1;letter-spacing:0.4em}}
+@keyframes preLogoFade{0%{opacity:0;transform:translate(-50%,-50%) scale(0.82)}60%{opacity:1}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .pre-tagline{
   font-family:'Cormorant Garamond',serif;font-style:italic;
   font-size:0.82rem;color:rgba(201,184,150,0.5);
@@ -698,6 +699,30 @@ nav{
   content:'';position:absolute;inset:0;
   background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(201,184,150,0.04),transparent);
 }
+/* Package picker inside addons */
+.pkg-picker{
+  max-width:1200px;margin:0 auto 2.5rem;
+  display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;
+}
+.pkg-picker-label{
+  font-size:0.58rem;letter-spacing:0.32em;text-transform:uppercase;
+  color:var(--muted);font-weight:400;margin-right:0.5rem;white-space:nowrap;
+}
+.pkg-select-btn{
+  font-family:'Poppins',sans-serif;font-size:0.6rem;font-weight:500;
+  letter-spacing:0.18em;text-transform:uppercase;
+  padding:0.55rem 1.2rem;border:1px solid var(--bdr);
+  background:transparent;color:var(--muted);cursor:pointer;
+  transition:all 0.3s;position:relative;
+}
+.pkg-select-btn:hover{border-color:var(--acc);color:var(--acc)}
+.pkg-select-btn.selected{background:var(--acc);color:var(--bg0);border-color:var(--acc);box-shadow:0 0 20px var(--glow)}
+.pkg-select-btn .pkg-btn-price{
+  display:block;font-size:0.52rem;font-weight:300;
+  letter-spacing:0.1em;opacity:0.75;margin-top:0.15rem;
+}
+.pkg-select-btn.selected .pkg-btn-price{opacity:0.85}
+
 .addons-grid{
   display:grid;grid-template-columns:repeat(4,1fr);
   gap:1.2rem;max-width:1200px;margin:0 auto;
@@ -709,7 +734,7 @@ nav{
   backdrop-filter:blur(16px);
   padding:1.8rem 1.4rem;
   transition:all 0.4s;
-  overflow:hidden;
+  overflow:hidden;cursor:pointer;user-select:none;
 }
 .addon-card::before{
   content:'';position:absolute;inset:0;
@@ -722,6 +747,26 @@ nav{
   box-shadow:0 20px 50px rgba(0,0,0,0.4),0 0 30px rgba(201,184,150,0.08);
 }
 .addon-card:hover::before{opacity:1}
+/* Selected state */
+.addon-card.selected{
+  border-color:var(--acc);
+  background:rgba(201,184,150,0.07);
+  box-shadow:0 0 28px var(--glow),0 20px 50px rgba(0,0,0,0.4);
+  transform:translateY(-4px);
+}
+.addon-card.selected::before{opacity:1}
+.addon-check{
+  position:absolute;top:0.9rem;right:0.9rem;
+  width:20px;height:20px;border-radius:50%;
+  border:1px solid var(--bdr);
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s;font-size:0.55rem;color:transparent;
+  background:transparent;
+}
+.addon-card.selected .addon-check{
+  background:var(--acc);border-color:var(--acc);
+  color:var(--bg0);box-shadow:0 0 10px var(--glow);
+}
 .addon-icon{
   font-size:1.8rem;margin-bottom:1rem;
   filter:grayscale(0.3);
@@ -752,6 +797,67 @@ nav{
 .addons-cta p{
   font-family:'Cormorant Garamond',serif;font-style:italic;
   color:var(--muted);font-size:1rem;margin-bottom:1.4rem;
+}
+
+/* =====================
+   BASKET BAR
+===================== */
+.basket-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:600;
+  background:rgba(6,7,12,0.97);
+  border-top:1px solid var(--acc);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  padding:1rem 2.5rem;
+  display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
+  transform:translateY(100%);
+  transition:transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94),border-color var(--tt);
+  box-shadow:0 -8px 40px rgba(0,0,0,0.6),0 -1px 0 var(--glow);
+}
+.basket-bar.visible{transform:translateY(0)}
+.basket-left{flex:1;min-width:0}
+.basket-label{
+  font-size:0.52rem;letter-spacing:0.36em;text-transform:uppercase;
+  color:var(--acc);margin-bottom:0.3rem;
+}
+.basket-items{
+  font-size:0.72rem;color:var(--muted);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  line-height:1.5;
+}
+.basket-right{display:flex;align-items:center;gap:1.2rem;flex-shrink:0}
+.basket-total-wrap{text-align:right}
+.basket-total-label{font-size:0.5rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--muted)}
+.basket-total{
+  font-family:'Poppins',sans-serif;font-size:1.15rem;font-weight:500;
+  color:var(--txt);letter-spacing:0.02em;line-height:1.2;
+  transition:color var(--tt);
+}
+.basket-clear{
+  font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);background:transparent;border:1px solid var(--bdr2);
+  padding:0.5rem 0.85rem;cursor:pointer;transition:all 0.3s;flex-shrink:0;
+}
+.basket-clear:hover{color:var(--acc);border-color:var(--acc)}
+.basket-wa-btn{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-family:'Poppins',sans-serif;font-size:0.62rem;font-weight:500;
+  letter-spacing:0.2em;text-transform:uppercase;
+  padding:0.85rem 1.8rem;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));
+  color:var(--bg0);border:none;cursor:pointer;
+  transition:all 0.35s;position:relative;overflow:hidden;flex-shrink:0;
+}
+.basket-wa-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--acc2),var(--acc));opacity:0;transition:opacity 0.35s}
+.basket-wa-btn:hover::after{opacity:1}
+.basket-wa-btn:hover{box-shadow:0 0 35px var(--glow),0 8px 25px rgba(0,0,0,0.4);transform:translateY(-2px)}
+.basket-wa-btn svg,.basket-wa-btn span{position:relative;z-index:1}
+@media(max-width:768px){
+  .basket-bar{padding:0.9rem 1.2rem;flex-wrap:wrap;gap:0.8rem}
+  .basket-left{width:100%;min-width:unset}
+  .basket-right{width:100%;justify-content:space-between}
+  .basket-wa-btn{flex:1;justify-content:center;padding:0.8rem 1rem;font-size:0.56rem}
+  .basket-clear{padding:0.5rem 0.7rem;font-size:0.52rem}
+  .basket-total{font-size:1rem}
 }
 
 /* =====================
@@ -1092,7 +1198,24 @@ footer{
   .addons-grid{grid-template-columns:1fr}
 }
 
-/* Tablet: 769px–1100px */
+/* Mobile card scroll dots */
+.scroll-dots{
+  display:none;justify-content:center;gap:0.45rem;
+  margin-top:1.2rem;padding-bottom:0.5rem;
+}
+.scroll-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--bdr);transition:all 0.35s;
+}
+.scroll-dot.active{
+  background:var(--acc);width:16px;border-radius:3px;
+  box-shadow:0 0 8px var(--glow);
+}
+@media(max-width:768px){.scroll-dots{display:flex}}
+
+/* Extra bottom padding so basket bar doesn't cover footer */
+body.basket-active{padding-bottom:90px}
+@media(max-width:768px){body.basket-active{padding-bottom:160px}}
 @media screen and (min-width:769px) and (max-width:1100px){
   nav{padding:1.2rem 2rem}.nav-links{display:none}
   .cards-wrap{padding:1rem 1.5rem 4rem}
@@ -1275,9 +1398,15 @@ footer{
     </div>
 
   </div>
-</section>
 
-<!-- FOUNDER SECTION -->
+  <!-- Mobile scroll dots -->
+  <div class="scroll-dots" id="scrollDots">
+    <div class="scroll-dot active" data-dot="0"></div>
+    <div class="scroll-dot" data-dot="1"></div>
+    <div class="scroll-dot" data-dot="2"></div>
+    <div class="scroll-dot" data-dot="3"></div>
+  </div>
+</section>
 <section class="founder-section">
   <div class="founder-image-wrap">
     <img src="arun.jpg" alt="Arun — Founder of Adography" class="founder-image">
@@ -1641,52 +1770,86 @@ footer{
   <div class="sec-head ai" style="padding-top:0">
     <div class="eyebrow">Personalise Your Story</div>
     <h2 class="sec-title">Package Add-Ons</h2>
-    <p class="sec-sub">Enhance any package with bespoke additions tailored to your celebration</p>
+    <p class="sec-sub">Pick a base package · tap any add-on to include it · your basket updates live</p>
   </div>
+
+  <!-- Mini package picker -->
+  <div class="pkg-picker ai d1">
+    <span class="pkg-picker-label">Choose Base Package</span>
+    <button class="pkg-select-btn" data-pkg="platinum">
+      Platinum
+      <span class="pkg-btn-price">₹1,49,000</span>
+    </button>
+    <button class="pkg-select-btn" data-pkg="gold">
+      Gold
+      <span class="pkg-btn-price">₹1,15,000</span>
+    </button>
+    <button class="pkg-select-btn" data-pkg="silver">
+      Silver
+      <span class="pkg-btn-price">₹74,999</span>
+    </button>
+    <button class="pkg-select-btn" data-pkg="bronze">
+      Bronze
+      <span class="pkg-btn-price">₹44,999</span>
+    </button>
+    <button class="pkg-select-btn" data-pkg="addons-only">
+      Add-ons Only
+      <span class="pkg-btn-price">custom</span>
+    </button>
+  </div>
+
   <div class="addons-grid">
-    <div class="addon-card ai d1">
+    <div class="addon-card ai d1" data-addon="drone" data-name="Drone Coverage" data-price="8000">
+      <div class="addon-check">✦</div>
       <div class="addon-icon">🚁</div>
       <div class="addon-name">Drone Coverage</div>
       <div class="addon-desc">Breathtaking aerial shots that frame your venue and procession from cinematic heights.</div>
       <div class="addon-price">₹8,000 <span>/ event</span></div>
     </div>
-    <div class="addon-card ai d2">
+    <div class="addon-card ai d2" data-addon="extra-hour" data-name="Extra Coverage Hour" data-price="3500">
+      <div class="addon-check">✦</div>
       <div class="addon-icon">⏱</div>
       <div class="addon-name">Extra Coverage Hour</div>
       <div class="addon-desc">Extend your session to capture every last toast, dance, and heartfelt moment.</div>
       <div class="addon-price">₹3,500 <span>/ hour</span></div>
     </div>
-    <div class="addon-card ai d3">
+    <div class="addon-card ai d3" data-addon="second-shooter" data-name="Second Shooter" data-price="6000">
+      <div class="addon-check">✦</div>
       <div class="addon-icon">📸</div>
       <div class="addon-name">Second Shooter</div>
       <div class="addon-desc">An additional photographer for dual-angle coverage — ensuring nothing goes uncaptured.</div>
       <div class="addon-price">₹6,000 <span>/ day</span></div>
     </div>
-    <div class="addon-card ai d4">
+    <div class="addon-card ai d4" data-addon="same-day-reel" data-name="Same-Day Edit Reel" data-price="5000">
+      <div class="addon-check">✦</div>
       <div class="addon-icon">🎬</div>
       <div class="addon-name">Same-Day Edit Reel</div>
       <div class="addon-desc">A beautifully cut highlight reel delivered on the same evening — ready for your reception screen.</div>
       <div class="addon-price">₹5,000 <span>/ reel</span></div>
     </div>
-    <div class="addon-card ai d1">
+    <div class="addon-card ai d1" data-addon="teaser" data-name="Additional Teaser" data-price="4500">
+      <div class="addon-check">✦</div>
       <div class="addon-icon">🎞</div>
       <div class="addon-name">Additional Teaser</div>
       <div class="addon-desc">A cinematic 2–3 minute film for social sharing, capturing the essence of your day.</div>
       <div class="addon-price">₹4,500 <span>/ teaser</span></div>
     </div>
-    <div class="addon-card ai d2">
+    <div class="addon-card ai d2" data-addon="extra-album" data-name="Extra Album (30 sheets)" data-price="4000">
+      <div class="addon-check">✦</div>
       <div class="addon-icon">📗</div>
       <div class="addon-name">Extra Album (30 sheets)</div>
       <div class="addon-desc">Premium 30-sheet luxury album — perfect as a keepsake gift for parents or loved ones.</div>
       <div class="addon-price">₹4,000 <span>/ album</span></div>
     </div>
-    <div class="addon-card ai d3">
+    <div class="addon-card ai d3" data-addon="wa-invite" data-name="WhatsApp Invite Video" data-price="2000">
+      <div class="addon-check">✦</div>
       <div class="addon-icon">💌</div>
       <div class="addon-name">WhatsApp Invite Video</div>
       <div class="addon-desc">A stunning digital invitation video for WhatsApp sharing — sets the tone before the celebration.</div>
       <div class="addon-price">₹2,000 <span>/ video</span></div>
     </div>
-    <div class="addon-card ai d4">
+    <div class="addon-card ai d4" data-addon="large-frame" data-name="Large Frame (24×36)" data-price="3000">
+      <div class="addon-check">✦</div>
       <div class="addon-icon">🖼</div>
       <div class="addon-name">Large Frame (24×36)</div>
       <div class="addon-desc">Museum-quality large-format print mounted on premium frame — your favourite moment, magnified.</div>
@@ -1694,8 +1857,7 @@ footer{
     </div>
   </div>
   <div class="addons-cta ai">
-    <p>Mix and match add-ons with any package · Customise your perfect collection</p>
-    <div class="addon-price">Build Your Package</div>
+    <p>Tap any add-on above to include it · Mix and match freely</p>
   </div>
 </section>
 
@@ -1798,6 +1960,27 @@ footer{
 </footer>
 <div class="ft-btm">
   <span class="ft-copy">Crafted with elegance &amp; passion</span>
+</div>
+
+<!-- BASKET BAR -->
+<div class="basket-bar" id="basketBar">
+  <div class="basket-left">
+    <div class="basket-label">Your Selection</div>
+    <div class="basket-items" id="basketItems">No items selected</div>
+  </div>
+  <div class="basket-right">
+    <div class="basket-total-wrap">
+      <div class="basket-total-label">Total</div>
+      <div class="basket-total" id="basketTotal">₹0</div>
+    </div>
+    <button class="basket-clear" id="basketClear" onclick="clearBasket()">Clear</button>
+    <button class="basket-wa-btn" onclick="sendBasketToWA()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span>Book on WhatsApp</span>
+    </button>
+  </div>
 </div>
 
 <script>
@@ -1944,6 +2127,17 @@ var heroObs=new IntersectionObserver(function(entries){
 var heroEl=document.getElementById('home');
 if(heroEl)heroObs.observe(heroEl);
 
+/* ---- POST-BRONZE → PLATINUM THEME ---- */
+var postBronzeObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting)activateTheme('platinum');
+  });
+},{threshold:0.12});
+['compare','addons','enquiry','contact'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(el)postBronzeObs.observe(el);
+});
+
 /* ---- NAV SCROLL ---- */
 var nav=document.getElementById('mainnav');
 window.addEventListener('scroll',function(){
@@ -1981,6 +2175,151 @@ if(prevBtn&&nextBtn&&cardsGrid){
   prevBtn.addEventListener('click',function(){cardsGrid.scrollBy({left:-window.innerWidth*0.85,behavior:'smooth'})});
   nextBtn.addEventListener('click',function(){cardsGrid.scrollBy({left:window.innerWidth*0.85,behavior:'smooth'})});
 }
+
+/* ---- MOBILE CARD SCROLL → AUTO THEME + DOTS ---- */
+if(cardsGrid){
+  var cards=Array.from(cardsGrid.querySelectorAll('.pkg-card'));
+  var dots=Array.from(document.querySelectorAll('.scroll-dot'));
+  var scrollEndTimer;
+
+  function getActiveCardIndex(){
+    var gridRect=cardsGrid.getBoundingClientRect();
+    var centerX=gridRect.left+gridRect.width/2;
+    var best=-1,minDist=Infinity;
+    cards.forEach(function(card,i){
+      var rect=card.getBoundingClientRect();
+      var dist=Math.abs((rect.left+rect.width/2)-centerX);
+      if(dist<minDist){minDist=dist;best=i;}
+    });
+    return best;
+  }
+
+  cardsGrid.addEventListener('scroll',function(){
+    clearTimeout(scrollEndTimer);
+    // Update dots live while scrolling
+    var idx=getActiveCardIndex();
+    dots.forEach(function(d,i){d.classList.toggle('active',i===idx)});
+    // Activate theme only after scroll settles
+    scrollEndTimer=setTimeout(function(){
+      var finalIdx=getActiveCardIndex();
+      if(finalIdx>=0&&cards[finalIdx]&&cards[finalIdx].dataset.theme){
+        activateTheme(cards[finalIdx].dataset.theme);
+      }
+    },180);
+  },{passive:true});
+}
+
+/* ---- ADD-ONS & BASKET ENGINE ---- */
+var selectedPkg=null;
+var selectedAddons={};
+
+var PKG_DATA={
+  platinum:{name:'Platinum',price:149000},
+  gold:{name:'Gold',price:115000},
+  silver:{name:'Silver',price:74999},
+  bronze:{name:'Bronze',price:44999},
+  'addons-only':{name:'Add-ons Only',price:0}
+};
+
+function fmtINR(n){
+  if(n===0)return '₹0';
+  return '₹'+n.toLocaleString('en-IN');
+}
+
+function updateBasket(){
+  var total=0;
+  var parts=[];
+
+  if(selectedPkg&&selectedPkg!=='addons-only'){
+    total+=PKG_DATA[selectedPkg].price;
+    parts.push(PKG_DATA[selectedPkg].name+' Package');
+  } else if(selectedPkg==='addons-only'){
+    parts.push('Add-ons Only');
+  }
+
+  var addonKeys=Object.keys(selectedAddons);
+  addonKeys.forEach(function(k){
+    total+=selectedAddons[k].price;
+    parts.push(selectedAddons[k].name);
+  });
+
+  var hasSelection=selectedPkg||addonKeys.length>0;
+  var bar=document.getElementById('basketBar');
+  var itemsEl=document.getElementById('basketItems');
+  var totalEl=document.getElementById('basketTotal');
+
+  if(hasSelection){
+    bar.classList.add('visible');
+    document.body.classList.add('basket-active');
+    totalEl.textContent=fmtINR(total);
+    itemsEl.textContent=parts.join(' · ');
+  } else {
+    bar.classList.remove('visible');
+    document.body.classList.remove('basket-active');
+  }
+}
+
+// Package buttons
+document.querySelectorAll('.pkg-select-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var t=btn.dataset.pkg;
+    if(selectedPkg===t){
+      selectedPkg=null;
+      btn.classList.remove('selected');
+    } else {
+      selectedPkg=t;
+      document.querySelectorAll('.pkg-select-btn').forEach(function(b){b.classList.remove('selected')});
+      btn.classList.add('selected');
+    }
+    updateBasket();
+  });
+});
+
+// Addon cards
+document.querySelectorAll('.addon-card[data-addon]').forEach(function(card){
+  card.addEventListener('click',function(){
+    var key=card.dataset.addon;
+    var name=card.dataset.name;
+    var price=parseInt(card.dataset.price,10);
+    if(selectedAddons[key]){
+      delete selectedAddons[key];
+      card.classList.remove('selected');
+    } else {
+      selectedAddons[key]={name:name,price:price};
+      card.classList.add('selected');
+    }
+    updateBasket();
+  });
+});
+
+window.clearBasket=function(){
+  selectedPkg=null;
+  Object.keys(selectedAddons).forEach(function(k){delete selectedAddons[k]});
+  document.querySelectorAll('.pkg-select-btn').forEach(function(b){b.classList.remove('selected')});
+  document.querySelectorAll('.addon-card').forEach(function(c){c.classList.remove('selected')});
+  updateBasket();
+};
+
+window.sendBasketToWA=function(){
+  var lines=[];
+  if(selectedPkg&&selectedPkg!=='addons-only'){
+    lines.push('📦 Package: '+PKG_DATA[selectedPkg].name+' ('+fmtINR(PKG_DATA[selectedPkg].price)+')');
+  }
+  Object.keys(selectedAddons).forEach(function(k){
+    lines.push('➕ '+selectedAddons[k].name+' ('+fmtINR(selectedAddons[k].price)+')');
+  });
+  var total=0;
+  if(selectedPkg&&selectedPkg!=='addons-only')total+=PKG_DATA[selectedPkg].price;
+  Object.keys(selectedAddons).forEach(function(k){total+=selectedAddons[k].price});
+
+  if(!lines.length){alert('Please select a package or at least one add-on first.');return;}
+
+  var msg='Hello Adography! I would like to book the following:\n\n'+
+    lines.join('\n')+'\n\n'+
+    '💰 Estimated Total: '+fmtINR(total)+'\n\n'+
+    'Looking forward to hearing from you!';
+  window.open('https://wa.me/918667656850?text='+encodeURIComponent(msg),'_blank');
+};
 
 /* ---- ENQUIRY FORM → WHATSAPP ---- */
 window.submitEnquiry=function(){
