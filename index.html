@@ -131,9 +131,27 @@ body{
   transform:translate(-50%,-50%);
   transition:width 0.3s,height 0.3s,border-color 0.3s,opacity 0.3s;
   opacity:0.6;
+   mix-blend-mode:difference;
 }
 .cursor-ring.hovered{width:48px;height:48px;opacity:0.9}
-@media(hover:none),(max-width:1024px){.cursor-dot,.cursor-ring{display:none}}
+  .cursor-dot{
+  mix-blend-mode:difference;
+}
+  @media (hover:hover){
+
+  body,
+  a,
+  button,
+  .pkg-card,
+  .card-btn,
+  .imm-book,
+  .nav-btn,
+  .wa-btn{
+    cursor:none;
+  }
+
+}
+@media(hover:none),(max-width:1024px){.cursor-dot,.cursor-ring{display:none;}}
 
 /* PARTICLES */
 #cvs{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.45}
@@ -972,7 +990,20 @@ footer{
   }
   .catalog-arrow:hover{opacity:1;background:rgba(255,255,255,0.08)}
   .catalog-prev{left:4px}.catalog-next{right:4px}
+.pkg-card:hover{
+  transform:none;
+  border-color:var(--bdr2);
+  box-shadow:none;
+}
 
+.pkg-card:hover::before,
+.pkg-card:hover::after{
+  opacity:0;
+  transform:scaleX(0);
+}
+  .pkg-card{
+  -webkit-tap-highlight-color:transparent;
+}
   /* FOUNDER */
   .founder-section{grid-template-columns:1fr;padding:4rem 1.4rem;gap:2.5rem;max-width:100%}
   .founder-image{width:100%;height:420px;object-fit:cover;object-position:center top}
@@ -1432,7 +1463,7 @@ footer{
 </section>
 
 <!-- ===================== PACKAGE COMPARISON TABLE ===================== -->
-<section class="compare-section" id="compare">
+<section class="compare-section" id="compare" data-theme="platinum-theme">
   <div class="sec-head ai" style="padding-top:0;opacity:0;transform:translateY(38px)">
     <div class="eyebrow">At a Glance</div>
     <h2 class="sec-title">Compare Packages</h2>
@@ -1606,7 +1637,7 @@ footer{
 </section>
 
 <!-- ===================== ADD-ONS SECTION ===================== -->
-<section class="addons-section" id="addons">
+<section class="addons-section" id="addons" data-theme="platinum-theme">
   <div class="sec-head ai" style="padding-top:0">
     <div class="eyebrow">Personalise Your Story</div>
     <h2 class="sec-title">Package Add-Ons</h2>
@@ -1669,7 +1700,7 @@ footer{
 </section>
 
 <!-- ===================== ENQUIRY FORM ===================== -->
-<section class="enquiry-section" id="enquiry">
+<section class="enquiry-section" id="enquiry"  data-theme="platinum-theme">
   <div class="enquiry-inner">
     <div class="sec-head ai" style="padding:0 0 0.5rem;text-align:left">
       <div class="eyebrow">Begin Your Journey</div>
@@ -1721,7 +1752,7 @@ footer{
 </section>
 
 <!-- CONTACT -->
-<section class="contact" id="contact">
+<section class="contact" id="contact" data-theme="platinum-theme">
   <div class="contact-bg"></div>
   <div class="contact-inner ai">
     <div class="c-eye">CELEBRATING FOREVER</div>
@@ -1751,7 +1782,7 @@ footer{
 </section>
 
 <!-- FOOTER -->
-<footer>
+<footer data-theme="platinum-theme">
   <div>
     <div class="ft-logo">ADOGRAPHY</div>
     <div class="ft-tag">"Your forever, beautifully framed."</div>
