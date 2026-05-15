@@ -1229,7 +1229,160 @@ footer{
   }
 
 }
-  
+/* =========================================================
+   MOBILE NAVIGATION IMPROVEMENTS
+========================================================= */
+
+@media screen and (max-width:1100px){
+
+  /* =========================
+     NAVIGATION LINKS
+  ========================= */
+
+  .nav-links{
+    display:flex;
+
+    position:fixed;
+
+    bottom:0;
+    left:0;
+
+    width:100%;
+
+    justify-content:space-around;
+    align-items:center;
+
+    padding:
+      1rem
+      0.4rem;
+
+    background:
+      rgba(5,5,10,0.92);
+
+    backdrop-filter:blur(20px);
+
+    border-top:
+      1px solid rgba(255,255,255,0.06);
+
+    z-index:9999;
+  }
+
+  .nav-links a{
+    font-size:0.45rem;
+
+    letter-spacing:0.16em;
+
+    text-transform:uppercase;
+
+    color:var(--txt2);
+
+    text-decoration:none;
+
+    transition:0.3s;
+  }
+
+  .nav-links a:hover{
+    color:var(--acc);
+  }
+
+  body{
+    padding-bottom:80px;
+  }
+
+  /* =========================
+     HERO DISCOVER ALIGN
+  ========================= */
+
+  .hero-discover{
+    display:flex;
+
+    justify-content:center;
+
+    width:100%;
+
+    margin-top:1.5rem;
+  }
+
+  /* =========================
+     CATALOG ARROW BUTTONS
+  ========================= */
+
+  .cards-wrap{
+    position:relative;
+  }
+
+  .cards-grid{
+    scroll-padding-inline:1rem;
+  }
+
+  .catalog-arrow{
+    position:absolute;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    border:
+      1px solid rgba(255,255,255,0.12);
+
+    background:
+      rgba(10,10,15,0.75);
+
+    backdrop-filter:blur(10px);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:var(--txt);
+
+    font-size:1rem;
+
+    cursor:pointer;
+
+    z-index:50;
+
+    transition:0.3s;
+  }
+
+  .catalog-arrow:hover{
+    background:rgba(255,255,255,0.08);
+
+    transform:
+      translateY(-50%)
+      scale(1.06);
+  }
+
+  .catalog-prev{
+    left:6px;
+  }
+
+  .catalog-next{
+    right:6px;
+  }
+
+}
+
+
+/* =========================================================
+   EXTRA SMALL DEVICES
+========================================================= */
+
+@media screen and (max-width:480px){
+
+  .catalog-arrow{
+    width:36px;
+    height:36px;
+
+    font-size:0.9rem;
+  }
+
+}  
 /* =========================================
    FOUNDER SECTION FINAL
 ========================================= */
@@ -1426,8 +1579,15 @@ footer{
 
 <!-- PACKAGE CARDS -->
 <section class="cards-wrap">
-  <div class="cards-grid">
+  <button class="catalog-arrow catalog-prev">
+  ‹
+</button>
 
+<button class="catalog-arrow catalog-next">
+  ›
+</button>
+  <div class="cards-grid">
+    
     <!-- PLATINUM -->
     <div class="pkg-card platinum ai d1" data-theme="platinum"
          onclick="activateTheme('platinum');document.getElementById('sec-platinum').scrollIntoView({behavior:'smooth'})">
@@ -1916,6 +2076,37 @@ setTimeout(()=>{
 },100);
 
 })();
+</script>
+<script>
+
+const cardsGrid = document.querySelector('.cards-grid');
+
+const prevBtn = document.querySelector('.catalog-prev');
+
+const nextBtn = document.querySelector('.catalog-next');
+
+if(prevBtn && nextBtn && cardsGrid){
+
+  prevBtn.addEventListener('click', () => {
+
+    cardsGrid.scrollBy({
+      left:-320,
+      behavior:'smooth'
+    });
+
+  });
+
+  nextBtn.addEventListener('click', () => {
+
+    cardsGrid.scrollBy({
+      left:320,
+      behavior:'smooth'
+    });
+
+  });
+
+}
+
 </script>
 </body>
 </html>
