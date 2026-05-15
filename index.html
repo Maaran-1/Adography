@@ -1110,6 +1110,23 @@ footer{
   .pkg-card{
   -webkit-tap-highlight-color:transparent;
 }
+
+  .discover{
+  display:flex;
+  flex-direction:column;
+
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+
+  margin:0 auto;
+}
+
+.discover::after{
+  left:50%;
+  transform:translateX(-50%);
+}
   /* FOUNDER */
   .founder-section{grid-template-columns:1fr;padding:4rem 1.4rem;gap:2.5rem;max-width:100%}
   .founder-image{width:100%;height:420px;object-fit:cover;object-position:center top}
@@ -1880,7 +1897,7 @@ body.basket-active{padding-bottom:90px}
           <input
   type="tel"
   id="f-phone"
-  placeholder="9876543210"
+  placeholder="8667656850"
   autocomplete="tel"
   required
   pattern="[6-9][0-9]{9}"
