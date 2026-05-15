@@ -2301,65 +2301,24 @@ window.clearBasket=function(){
 };
 
 window.sendBasketToWA=function(){
-
   var lines=[];
-
-  if(selectedPkg && selectedPkg!=='addons-only'){
-
-    lines.push(
-      '[Package] '+
-      PKG_DATA[selectedPkg].name+
-      ' ('+
-      fmtINR(PKG_DATA[selectedPkg].price)+
-      ')'
-    );
-
+  if(selectedPkg&&selectedPkg!=='addons-only'){
+    lines.push('Package: '+PKG_DATA[selectedPkg].name+' ('+fmtINR(PKG_DATA[selectedPkg].price)+')');
   }
-
   Object.keys(selectedAddons).forEach(function(k){
-
-    lines.push(
-      '[Add-on] '+
-      selectedAddons[k].name+
-      ' ('+
-      fmtINR(selectedAddons[k].price)+
-      ')'
-    );
-
+    lines.push(selectedAddons[k].name+' ('+fmtINR(selectedAddons[k].price)+')');
   });
-
   var total=0;
+  if(selectedPkg&&selectedPkg!=='addons-only')total+=PKG_DATA[selectedPkg].price;
+  Object.keys(selectedAddons).forEach(function(k){total+=selectedAddons[k].price});
 
-  if(selectedPkg && selectedPkg!=='addons-only'){
-    total+=PKG_DATA[selectedPkg].price;
-  }
+  if(!lines.length){alert('Please select a package or at least one add-on first.');return;}
 
-  Object.keys(selectedAddons).forEach(function(k){
-    total+=selectedAddons[k].price;
-  });
-
-  if(!lines.length){
-
-    alert('Please select a package or at least one add-on first.');
-
-    return;
-  }
-
-  var msg=
-    'Hello Adography! I would like to book the following:\\n\\n'+
-    lines.join('\\n')+
-    '\\n\\n'+
-    'Estimated Total: '+
-    fmtINR(total)+
-    '\\n\\n'+
+  var msg='Hello Adography! I would like to book the following:\n\n'+
+    lines.join('\n')+'\n\n'+
+    'Estimated Total: '+fmtINR(total)+'\n\n'+
     'Looking forward to hearing from you!';
-
-  window.open(
-    'https://wa.me/918667656850?text='+
-    encodeURIComponent(msg),
-    '_blank'
-  );
-
+  window.open('https://wa.me/918667656850?text='+encodeURIComponent(msg),'_blank');
 };
 
 /* ---- ENQUIRY FORM → WHATSAPP ---- */
